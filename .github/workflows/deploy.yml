@@ -27,5 +27,4 @@ jobs:
     - name: Deploy over SSH
       run: |
         docker compose -f docker-compose.traefik.yml up -d
-        EOF
  
