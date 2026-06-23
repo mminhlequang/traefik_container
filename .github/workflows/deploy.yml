@@ -26,5 +26,14 @@ jobs:
 
     - name: Deploy over SSH
       run: |
-        docker compose -f docker-compose.traefik.yml up -d
+        ssh root@64.226.99.249 "DEPLOY_TARGET='$DEPLOY_TARGET' bash -s" << 'EOF'
+          set -e 
+          git fetch origin main
+          git reset --hard origin/main
+
+          docker compose -f docker-compose.traefik.yml up -d
+
+          echo "🎉 Deploy complete!"
+        EOF
+        
  
