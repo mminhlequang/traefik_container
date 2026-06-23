@@ -3,7 +3,7 @@ name: Deploy to VPS by Commit Message
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
@@ -22,7 +22,7 @@ jobs:
 
     - name: Add VPS to known_hosts
       run: |
-        ssh-keyscan -H 165.245.248.210 >> ~/.ssh/known_hosts
+        ssh-keyscan -H 64.226.99.249 >> ~/.ssh/known_hosts
 
     - name: Deploy over SSH
       run: |
