@@ -1,0 +1,47 @@
+http:
+  routers:
+
+    # Fastship Routers
+
+    fastship-customer:
+      rule: "Host(`fastshiphu.com`) || Host(`www.fastshiphu.com`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: fastship-customer
+
+    fastship-admin:
+      rule: "Host(`admin.fastshiphu.com`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: fastship-admin
+
+    fastship-api:
+      rule: "Host(`api.fastshiphu.com`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: fastship-api
+
+  services:
+
+    # Fastship Services
+
+    fastship-customer:
+      loadBalancer:
+        servers:
+          - url: "http://nextjs-customer:3000"
+
+    fastship-admin:
+      loadBalancer:
+        servers:
+          - url: "http://nextjs-admin:3001"
+
+    fastship-api:
+      loadBalancer:
+        servers:
+          - url: "http://fastship_api-backend-1:8000"
