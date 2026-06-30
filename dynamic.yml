@@ -44,4 +44,4 @@ http:
     fastship-api:
       loadBalancer:
         servers:
-          - url: "http://fastship_api-backend-1:8000"
+          - url: "http://backend_fastapi-backend-1:8000"
