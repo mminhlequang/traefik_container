@@ -4,11 +4,17 @@ http:
     # Fastship Routers
 
     fastship-customer:
-      rule: "Host(`fastshiphu.com`) || Host(`www.fastshiphu.com`)"
+      rule: "Host(`fastshiphu.com`) || HostRegexp(`^[a-z0-9-]+\\.fastshiphu\\.com$`)"
+      # Keep exact admin/api Host routers ahead of this wildcard fallback.
+      priority: 1
       entrypoints:
         - websecure
       tls:
         certResolver: letsencrypt
+        domains:
+          - main: fastshiphu.com
+            sans:
+              - "*.fastshiphu.com"
       service: fastship-customer
 
     fastship-admin:

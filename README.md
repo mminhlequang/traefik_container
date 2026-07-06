@@ -1,10 +1,40 @@
 # Traefik dùng chung trên VPS
 
+## Cấu hình Cloudflare DNS challenge
+
+Traefik dùng Cloudflare DNS-01 challenge để cấp chứng chỉ cho
+`fastshiphu.com` và `*.fastshiphu.com`.
+
+1. Vào Cloudflare Dashboard, mở **My Profile > API Tokens**.
+2. Chọn **Create Token**, sau đó chọn template **Edit zone DNS**.
+3. Cấu hình quyền:
+   - `Zone` / `DNS` / `Edit`
+   - `Zone` / `Zone` / `Read`
+4. Trong **Zone Resources**, chọn **Include > Specific zone > fastshiphu.com**.
+5. Tạo token và sao chép ngay; Cloudflare chỉ hiển thị giá trị token một lần.
+6. Trên VPS, tạo file `.env` cạnh `docker-compose.traefik.yml`:
+
+```dotenv
+CF_DNS_API_TOKEN=token_cloudflare_cua_ban
+```
+
+Không commit `.env`. File này đã được thêm vào `.gitignore`.
+
 ## Khởi chạy / cập nhật Traefik
 
 ```bash
 docker compose -f docker-compose.traefik.yml up -d
 ```
+
+Kiểm tra việc cấp chứng chỉ:
+
+```bash
+docker logs -f traefik-container
+```
+
+Router customer là wildcard fallback: mọi hostname một cấp như
+`shop.fastshiphu.com` sẽ đi vào customer. Các router cụ thể như
+`admin.fastshiphu.com` và `api.fastshiphu.com` vẫn được ưu tiên.
 
 ## Thêm hoặc cập nhật service
 
