@@ -45,7 +45,9 @@ jobs:
 
             docker compose -f docker-compose.traefik.yml config --quiet
             docker compose -f docker-compose.traefik.yml pull
-            docker compose -f docker-compose.traefik.yml up -d --remove-orphans
+            # dynamic.yml is bind-mounted as a file. Git can replace its inode,
+            # so recreate the container to guarantee Traefik mounts the new file.
+            docker compose -f docker-compose.traefik.yml up -d --force-recreate --remove-orphans
 
             docker compose -f docker-compose.traefik.yml ps
           EOF
