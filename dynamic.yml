@@ -33,6 +33,22 @@ http:
         certResolver: letsencrypt
       service: fastship-api
 
+    fastship-pos:
+      rule: "Host(`pos.fastshiphu.com`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: fastship-pos
+
+    fastship-pos-staff:
+      rule: "Host(`posstaff.fastshiphu.com`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+      service: fastship-pos-staff
+
   services:
 
     # Fastship Services
@@ -51,3 +67,13 @@ http:
       loadBalancer:
         servers:
           - url: "http://backend_fastapi-backend-1:8000"
+
+    fastship-pos:
+      loadBalancer:
+        servers:
+          - url: "http://nextjs-pos:3004"
+
+    fastship-pos-staff:
+      loadBalancer:
+        servers:
+          - url: "http://nextjs-pos-staff:3005"

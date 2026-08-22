@@ -34,7 +34,8 @@ docker logs -f traefik-container
 
 Router customer là wildcard fallback: mọi hostname một cấp như
 `shop.fastshiphu.com` sẽ đi vào customer. Các router cụ thể như
-`admin.fastshiphu.com` và `api.fastshiphu.com` vẫn được ưu tiên.
+`admin.fastshiphu.com`, `api.fastshiphu.com`, `pos.fastshiphu.com` và
+`posstaff.fastshiphu.com` vẫn được ưu tiên.
 
 ## Thêm hoặc cập nhật service
 
