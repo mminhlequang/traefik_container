@@ -49,6 +49,24 @@ http:
         certResolver: letsencrypt
       service: fastship-pos-staff
 
+    # Modriva Routers
+
+    modriva-web:
+      rule: "Host(`modriva.gmah.cloud`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt-http
+      service: modriva-web
+
+    modriva-api:
+      rule: "Host(`api.modriva.gmah.cloud`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt-http
+      service: modriva-api
+
   services:
 
     # Fastship Services
@@ -77,3 +95,15 @@ http:
       loadBalancer:
         servers:
           - url: "http://nextjs-pos-staff:3005"
+
+    # Modriva Services
+
+    modriva-web:
+      loadBalancer:
+        servers:
+          - url: "http://modriva-web:3000"
+
+    modriva-api:
+      loadBalancer:
+        servers:
+          - url: "http://modriva-api:8000"
