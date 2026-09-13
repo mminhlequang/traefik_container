@@ -5,6 +5,9 @@
 Traefik dùng Cloudflare DNS-01 challenge để cấp chứng chỉ cho
 `fastshiphu.com` và `*.fastshiphu.com`.
 
+Domain rút gọn `fastship.hu` được route vào customer app và dùng HTTP-01
+challenge, nên không cần mở rộng Cloudflare token sang zone khác.
+
 1. Vào Cloudflare Dashboard, mở **My Profile > API Tokens**.
 2. Chọn **Create Token**, sau đó chọn template **Edit zone DNS**.
 3. Cấu hình quyền:
@@ -36,6 +39,8 @@ Router customer là wildcard fallback: mọi hostname một cấp như
 `shop.fastshiphu.com` sẽ đi vào customer. Các router cụ thể như
 `admin.fastshiphu.com`, `api.fastshiphu.com`, `pos.fastshiphu.com` và
 `posstaff.fastshiphu.com` vẫn được ưu tiên.
+
+Router `fastship-hu` phục vụ `fastship.hu` bằng cùng customer service.
 
 ## Thêm hoặc cập nhật service
 

@@ -17,6 +17,14 @@ http:
               - "*.fastshiphu.com"
       service: fastship-customer
 
+    fastship-hu:
+      rule: "Host(`fastship.hu`)"
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt-http
+      service: fastship-customer
+
     fastship-admin:
       rule: "Host(`admin.fastshiphu.com`)"
       entrypoints:
