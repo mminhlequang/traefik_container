@@ -8,6 +8,17 @@ Traefik dùng Cloudflare DNS-01 challenge để cấp chứng chỉ cho
 Domain rút gọn `fastship.hu` được route vào customer app và dùng HTTP-01
 challenge, nên không cần mở rộng Cloudflare token sang zone khác.
 
+Các storefront `*.fastship.hu` dùng wildcard certificate qua DNS-01. Khi zone
+`fastship.hu` vẫn dùng nameserver DNS24, tạo record sau tại DNS24 để Traefik có
+thể dùng Cloudflare token hiện tại của zone `fastshiphu.com`:
+
+```text
+_acme-challenge.fastship.hu CNAME fastship-hu-acme.fastshiphu.com.
+```
+
+Không tạo record cố định cho target `fastship-hu-acme.fastshiphu.com`;
+Traefik sẽ tự tạo và xóa TXT record tại đó khi cấp hoặc gia hạn chứng chỉ.
+
 1. Vào Cloudflare Dashboard, mở **My Profile > API Tokens**.
 2. Chọn **Create Token**, sau đó chọn template **Edit zone DNS**.
 3. Cấu hình quyền:
@@ -40,7 +51,9 @@ Router customer là wildcard fallback: mọi hostname một cấp như
 `admin.fastshiphu.com`, `api.fastshiphu.com`, `pos.fastshiphu.com` và
 `posstaff.fastshiphu.com` vẫn được ưu tiên.
 
-Router `fastship-hu` phục vụ `fastship.hu` bằng cùng customer service.
+Router `fastship-hu` phục vụ `fastship.hu`; router `fastship-hu-storefronts`
+phục vụ mọi hostname một cấp như `kanaan.fastship.hu` bằng cùng customer
+service.
 
 ## Thêm hoặc cập nhật service
 

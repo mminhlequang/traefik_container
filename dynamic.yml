@@ -25,6 +25,17 @@ http:
         certResolver: letsencrypt-http
       service: fastship-customer
 
+    fastship-hu-storefronts:
+      rule: "HostRegexp(`^[a-z0-9-]+\\.fastship\\.hu$`)"
+      priority: 1
+      entrypoints:
+        - websecure
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: "*.fastship.hu"
+      service: fastship-customer
+
     fastship-admin:
       rule: "Host(`admin.fastshiphu.com`)"
       entrypoints:
